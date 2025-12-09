@@ -26,9 +26,11 @@
 
 ## 🛠 Technology Stack
 
-| Frontend | Backend              | Database | Authentication | Styling   |
-| -------- | -------------------- | -------- | -------------- | --------- |
-| React.js | Node.js & Express.js | MongoDB  | JWT            | Bootstrap |
+* **Frontend:** React.js
+* **Backend:** Node.js & Express.js
+* **Database:** MongoDB
+* **Authentication:** JWT
+* **Styling:** Bootstrap
 
 ---
 
@@ -42,13 +44,16 @@
 ### **Run Locally**
 
 ```bash
+# Clone the repository
+git clone https://github.com/Aum-Ahsan/petshop-management-system.git
+
 # Backend
-cd server
+cd petshop-management-system/server
 npm install
 npm start
 
 # Frontend
-cd client
+cd ../client
 npm install
 npm run dev
 ```
@@ -63,26 +68,19 @@ npm run dev
 
 ---
 
-## 🖼 Screenshots
+## 📥 Download from GitHub
 
-> Showcase your project visually! Replace the images with your own screenshots:
+You can download this project in two ways:
 
-![User Dashboard](./screenshots/user-dashboard.png)
-![Admin Panel](./screenshots/admin-panel.png)
-![Product Page](./screenshots/product-page.png)
+1. **Clone using Git (recommended):**
 
----
+```bash
+git clone https://github.com/Aum-Ahsan/petshop-management-system.git
+```
 
-## ⚡ Badges
+2. **Download as ZIP:**
 
-![Node.js](https://img.shields.io/badge/Node.js-v18-green)
-![React](https://img.shields.io/badge/React-v18-blue)
-![MongoDB](https://img.shields.io/badge/MongoDB-v6-brightgreen)
-![License](https://img.shields.io/badge/License-MIT-yellow)
-
----
-
-## 📄 License
-
-This project is **open-source** and free to use.
+* Go to [https://github.com/Aum-Ahsan/petshop-management-system](https://github.com/Aum-Ahsan/petshop-management-system)
+* Click **Code → Download ZIP**
+* Extract the folder and follow the installation steps above.
 
