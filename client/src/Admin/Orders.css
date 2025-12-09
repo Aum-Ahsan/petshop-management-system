@@ -1,0 +1,17 @@
+.btn-link-style {
+    border: none;
+    background: none;
+    color: #8c8e92;
+    padding: 0;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 0.5rem 0.5rem;
+    border: 1px solid #8c8e92;
+  }
+  .btn-link-style:hover {
+    background: none;
+    color: #535556;
+    text-decoration: none;
+  }
+
+  

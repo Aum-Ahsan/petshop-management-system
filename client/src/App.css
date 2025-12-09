@@ -1,0 +1,350 @@
+.custom-container {
+  padding-top: 10px; /* Adds padding at the top of the container */
+}
+
+.custom-row {
+  min-height: 90vh; /* Sets the minimum height of the row */
+}
+
+.image-column {
+  padding-right: 20px; /* Right padding for the image column */
+}
+
+.info-column {
+  padding-left: 20px; /* Left padding for the info column */
+}
+
+/*--------------------- Image CSS-----------------------------  */
+
+.full-width-image, .animated-image {
+  width: 100%; /* Sets image width to take full available space */
+  height: auto; /* Maintains aspect ratio */
+  opacity: 0;
+  animation: fadeIn 1s ease-in-out forwards;
+}
+
+.fixed-size-image {
+  max-width: 100%; /* Ensure the image does not overflow its container */
+  height: auto; /* Maintain aspect ratio */
+  
+  object-fit: cover; /* Ensure the images cover the area without distortion */
+}
+
+
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.custom-button {
+  background-color: white; /* White background */
+  color: black; /* Black text for readability */
+   /* Green border for a professional look */
+  padding: 10px 20px; /* Spacing for a larger, clean look */
+  transition: all 0.3s ease-in-out; /* Smooth hover transition */
+}
+
+.custom-button:hover {
+  background-color: #28a745; /* Green background on hover */
+  color: white; /* White text for contrast */
+  transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+.stylish-underline {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  width: 100%; /* Ensure it takes up full width of its container */
+}
+
+.stylish-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -10px; /* Adjust the distance below the text */
+  left: 10%;
+  width: 80%; /* Cover 80% of the container width */
+  height: 2px; /* Thin underline */
+  background-color: #aebcce; /* Solid color, change as needed */
+  border-radius: 2px;
+}
+
+ /* ----home card css------ */
+/* In your AvailableItems.css */
+.custom-card-img {
+  object-fit: cover;
+  height: 180px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.custom-card {
+  border-radius: 10px;
+  transition: transform 0.2s ease;
+}
+
+.custom-card:hover {
+  transform: translateY(-5px); /* Adds a slight hover effect */
+}
+
+.description-text {
+  font-size: 14px;
+  height: 80px; /* Limit description height */
+  overflow: hidden; /* Hide overflow text */
+}
+
+
+
+
+
+
+
+
+ 
+
+.header-welcome, .header-offers {
+  background-color: #ADD8E6; /* Light blue background color */
+  padding: 10px; /* Padding inside the header */
+  margin-top: 0; /* No top margin */
+  margin-bottom: 10px; /* Space below the header */
+}
+
+.custom-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.custom-table td {
+  border-bottom: 1px solid #ccc; /* Bottom border for each cell */
+  padding: 8px;
+}
+
+.custom-table tr:last-child td {
+  border-bottom: none; /* Removes bottom border from the last row */
+}
+
+/*-------------------------Footer CSS-------------------------- */
+.footer {
+  background-color: #343a40; /* Dark grey background */
+  color: white;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer a {
+  color: white;
+  transition: color 0.2s;
+}
+
+.footer a:hover {
+  color: #ffc107; /* Bootstrap yellow for hover */
+}
+
+.footer p {
+  margin-bottom: 0;
+}
+
+
+/* ------------------Home page CSS--------------------- */
+
+
+.hero-section {
+  background-size: cover;
+  background-position: center;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+}
+
+.hero-text h1 {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.hero-text p {
+  font-size: 1.5rem;
+}
+
+
+
+
+
+
+
+
+
+.text-center {
+  text-align: center;
+}
+
+button {
+  margin: 5px;
+}
+
+img.img-fluid, img.icon-fluid {
+  max-width: 100%;
+  height: auto;
+  margin-top: 20px;
+}
+
+img.icon-fluid {
+  max-width: 50px;
+  margin: 0 auto;
+}
+
+.text-center h2 {
+  margin-top: 20px;
+}
+
+.text-center p {
+  margin-top: 10px;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.d-flex p {
+  font-size:20px ;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+
+}
+
+.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+button.custom-button {
+  margin: 5px;
+  background: transparent;
+  border: 1px solid #28a745; /* Green border */
+  color: #28a745; /* Green text */
+  transition: background 0.3s, color 0.3s;
+}
+
+button.custom-button:hover {
+  background: #28a745; /* Green background on hover */
+  color: white; /* White text on hover */
+}
+
+/* -----------------------------About Us page CSS-------------------------------- */
+
+
+.about-us h2, .about-us h3 {
+  color: black;
+}
+
+.about-us h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+
+.about-us h3 {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.about-us p {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.my-4 {
+  margin-top: 3rem !important;
+  margin-bottom: 3rem !important;
+}
+
+.custom-card {
+  border: none;
+}
+
+.image-container {
+  flex: 0 0 auto;
+  width: 30%;
+  margin-right: 10px;
+}
+
+.text-container {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .about-us h2 {
+    font-size: 2rem;
+  }
+
+  .about-us h3 {
+    font-size: 1.5rem;
+  }
+
+  .about-us p {
+    font-size: 1rem;
+  }
+
+  .my-4 {
+    margin-top: 2rem !important;
+    margin-bottom: 2rem !important;
+  }
+
+  .image-container {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .text-container {
+    width: 100%;
+  }
+}
+
+li{
+  list-style-type: none;
+  color: green;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+h4{
+  color: #5bc374;
+}
+
+.services{
+  color: green;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.chooseUs {
+  background-color: #e2f1f7;
+  padding: 15px 0;
+  margin: 0;
+  width: 100vw; /* Full width of the viewport */
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding-left: calc((100vw - 100%) / 2);
+  padding-right: calc((100vw - 100%) / 2);
+}
+
+
