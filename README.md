@@ -63,8 +63,8 @@ npm run dev
 ## 🔑 Admin Login
 
 * URL: [http://localhost:5173/AdminLogin](http://localhost:5173/AdminLogin)
-* **Username:** `admin`
-* **Password:** `123`
+* **Username:** `Admin`
+* **Password:** `Admin@123`
 
 ---
 
