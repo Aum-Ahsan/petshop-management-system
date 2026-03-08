@@ -19,7 +19,6 @@ app.use(express.json({ limit: '50mb' }));
 ================================ */
 
 mongoose.connect(
-"mongodb+srv://Admin:admin123@cluster0.ad0s3xp.mongodb.net/PetShop?retryWrites=true&w=majority"
 )
 .then(() => {
     console.log("✅ MongoDB Connected");
