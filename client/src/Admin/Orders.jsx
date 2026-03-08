@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Orders.css";
 import axios from 'axios';
@@ -19,8 +19,10 @@ const Orders = () => {
         alert(`Order ${orderId} delivered`);
         break;
       case 'download':
-        const order = orders.find(order => order._id === orderId);
-        generateReceipt(order);
+        {
+          const order = orders.find(order => order._id === orderId);
+          generateReceipt(order);
+        }
         break;
       default:
         break;

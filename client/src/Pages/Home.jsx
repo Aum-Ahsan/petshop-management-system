@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Button, Carousel, Card, Collapse} from 'react-bootstrap';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Container, Row, Col, Button, Carousel, Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../App.css';
 import petBg from '../images/petbg1.jpg';
@@ -117,7 +118,7 @@ const Home = () => {
   <Col md={12} className="text-center hero-text">
     <h1>Welcome to Our Pet Shop</h1>
     <p>Your one-stop shop for all your pet needs!</p>
-    <Button href="/AvailableItems" size="lg" className="custom-button">
+    <Button as={Link} to="/AvailableItems" size="lg" className="custom-button">
       Shop Now
     </Button>
   </Col>
@@ -163,7 +164,7 @@ const Home = () => {
           <Col md={6} className=" text-center d-flex align-items-center justify-content-center">
             <div>
               <h2 className='mb-5'>About Us</h2>
-              <p>Our pet shop offers a wide range of products and services to cater to all your pet's needs. From nutritious food to fun toys, we have it all. Our team is passionate about pets and dedicated to providing excellent customer service.</p>
+              <p>Our pet shop offers a wide range of products and services to cater to all your pet&apos;s needs. From nutritious food to fun toys, we have it all. Our team is passionate about pets and dedicated to providing excellent customer service.</p>
             </div>
           </Col>
           <Col md={6} className="d-flex align-items-center justify-content-center">
@@ -298,7 +299,7 @@ const Home = () => {
             <li>Personalized Care</li>
             <li>Quick Delivery</li>
           </ul>
-          <Button variant="success">Shop Now</Button>
+          <Button as={Link} to="/AvailableItems" variant="success">Shop Now</Button>
         </Col>
       </Row>
     </Container>

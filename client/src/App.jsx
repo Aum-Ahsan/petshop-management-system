@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';  
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import PropTypes from 'prop-types';  
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Topnav from './components/Topnav';
 import Home from './Pages/Home';
@@ -30,8 +30,12 @@ function App() {
 
    const ProtectAdminRoute = ({ element }) => {
     const isAdminLoggedIn = localStorage.getItem('adminLoggedIn');
-    return isAdminLoggedIn? element : <Navigate to = "/AdminLogin" replace /> ;  
+    return isAdminLoggedIn ? element : <Navigate to="/AdminLogin" replace />;
   }
+
+  ProtectAdminRoute.propTypes = {
+    element: PropTypes.element
+  };
 
   return (
     <>
@@ -64,4 +68,3 @@ function App() {
 }
 
 export default App;
-

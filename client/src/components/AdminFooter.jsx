@@ -6,7 +6,7 @@ const AdminFooter = () => {
             <Container>
                 <Row>
                     <Col md={12} className="text-center">
-                        <p>© 2024 Petshop Online Website. All Rights Reserved</p>
+                        <p>© 2026 Petshop Online Website. All Rights Reserved</p>
                     </Col>
                 </Row>
             </Container>

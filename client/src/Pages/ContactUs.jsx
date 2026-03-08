@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt, faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
@@ -45,7 +45,7 @@ const ContactUs = () => {
             <FontAwesomeIcon icon={faMapMarkerAlt} className="contact-icon" />
             <div className="info-content">
               <h5>Address</h5>
-              <p>123 Petshop Street, City, Country</p>
+              <p>123 Petshop Street, City, Sri Lanka</p>
             </div>
           </div>
           <div className="info-item">
@@ -59,7 +59,7 @@ const ContactUs = () => {
             <FontAwesomeIcon icon={faPhone} className="contact-icon" />
             <div className="info-content">
               <h5>Phone</h5>
-              <p>+123 456 7890</p>
+              <p>+94-75 710 62 55</p>
             </div>
           </div>
         </Col>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -27,9 +27,9 @@ const Signup = () => {
     }
   };
 
-  const handleReset = () => {
-    setFormData({ username: '', email: '', password: '' });
-  };
+  // const handleReset = () => {
+  //   setFormData({ username: '', email: '', password: '' });
+  // };
 
   return (
     <div className="container">

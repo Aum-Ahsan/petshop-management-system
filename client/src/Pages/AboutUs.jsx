@@ -1,4 +1,3 @@
-import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckDouble, faStar, faAmbulance, faTrophy, faClock } from '@fortawesome/free-solid-svg-icons';
@@ -19,7 +18,7 @@ const AboutUs = () => {
           <div>
             <h3 className='mt-3'>About Us</h3>
             <p>
-              Our pet shop offers a wide range of products and services to cater to all your pet's needs. From nutritious food to fun toys, we have it all. Our team is passionate about pets and dedicated to providing excellent customer service.
+              Our pet shop offers a wide range of products and services to cater to all your pet&apos;s needs. From nutritious food to fun toys, we have it all. Our team is passionate about pets and dedicated to providing excellent customer service.
             </p>
             <ul>
               <li>

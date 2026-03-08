@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+
 const ProductModel = require('./models/Products');
 const OrderModel = require('./models/Order');
 const AdminAccount = require('./models/AdminAccount');
@@ -13,169 +14,355 @@ const JWT_SECRET = process.env.JWT_SECRET || 'yourSecretKey';
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 
-// Connect to MongoDB
-mongoose.connect('mongodb+srv://wazeem:Secret789@cluster0.x0ysh.mongodb.net/PetShop')
-  .then(() => {
-    console.log('Connected to MongoDB');
-  })
-  .catch((error) => {
-    console.error('Error connecting to MongoDB:', error.message);
-  });
+/* ===============================
+   MongoDB Connection
+================================ */
 
-// Middleware to verify JWT
+mongoose.connect(
+"mongodb+srv://Admin:admin123@cluster0.ad0s3xp.mongodb.net/PetShop?retryWrites=true&w=majority"
+)
+.then(() => {
+    console.log("✅ MongoDB Connected");
+})
+.catch((error) => {
+    console.log("❌ MongoDB Connection Error:", error);
+});
+
+
+/* ===============================
+   JWT Authentication Middleware
+================================ */
+
 const authenticationToken = (req, res, next) => {
-  const token = req.headers['authorization'];
-  if (!token) return res.status(401).json({ message: 'Access Denied' });
 
-  jwt.verify(token.split(' ')[1], JWT_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ message: 'Invalid Token' });
-    req.user = user;
-    next();
-  });
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+        return res.status(401).json({ message: "Access Denied" });
+    }
+
+    const token = authHeader.split(" ")[1];
+
+    jwt.verify(token, JWT_SECRET, (err, user) => {
+
+        if (err) {
+            return res.status(403).json({ message: "Invalid Token" });
+        }
+
+        req.user = user;
+        next();
+
+    });
+
 };
 
-// User Schema and Model
+
+/* ===============================
+   User Model
+================================ */
+
 const userSchema = new mongoose.Schema({
-  username: String,
-  email: { type: String, unique: true },
-  password: String,
+    username: String,
+    email: { type: String, unique: true },
+    password: String
 });
-const UserModel = mongoose.model('User', userSchema);
 
-// User Signup API
-app.post('/signup', async (req, res) => {
-  try {
-    const { username, email, password } = req.body;
+const UserModel = mongoose.model("User", userSchema);
 
-    if (!username || !email || !password) {
-      return res.status(400).json({ message: 'All fields are required' });
+
+/* ===============================
+   User Signup
+================================ */
+
+app.post("/signup", async (req, res) => {
+
+    try {
+
+        const { username, email, password } = req.body;
+
+        if (!username || !email || !password) {
+            return res.status(400).json({ message: "All fields required" });
+        }
+
+        const existingUser = await UserModel.findOne({ email });
+
+        if (existingUser) {
+            return res.status(400).json({ message: "Email already exists" });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const newUser = new UserModel({
+            username,
+            email,
+            password: hashedPassword
+        });
+
+        await newUser.save();
+
+        res.status(201).json({ message: "User registered successfully" });
+
+    } catch (error) {
+
+        console.log(error);
+        res.status(500).json({ message: "Server Error" });
+
     }
 
-    const existingUser = await UserModel.findOne({ email });
-    if (existingUser) return res.status(400).json({ message: 'Email already registered' });
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new UserModel({ username, email, password: hashedPassword });
-    await user.save();
-
-    res.status(201).json({ message: 'User registered successfully' });
-  } catch (err) {
-    console.error('Error during signup:', err.message);
-    res.status(500).json({ message: 'Server error' });
-  }
 });
 
-// User Login API
-app.post('/login', async (req, res) => {
-  const { email, password } = req.body;
 
-  try {
-    const user = await UserModel.findOne({ email });
-    if (!user) {
-      return res.status(400).json({ message: 'Invalid email or password' });
+/* ===============================
+   User Login
+================================ */
+
+app.post("/login", async (req, res) => {
+
+    try {
+
+        const { email, password } = req.body;
+
+        const user = await UserModel.findOne({ email });
+
+        if (!user) {
+            return res.status(400).json({ message: "Invalid Email or Password" });
+        }
+
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+
+        if (!isPasswordValid) {
+            return res.status(400).json({ message: "Invalid Email or Password" });
+        }
+
+        const token = jwt.sign(
+            { id: user._id, email: user.email },
+            JWT_SECRET,
+            { expiresIn: "1h" }
+        );
+
+        res.json({
+            message: "Login Successful",
+            token
+        });
+
+    } catch (error) {
+
+        console.log(error);
+        res.status(500).json({ message: "Server Error" });
+
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(400).json({ message: 'Invalid email or password' });
+});
+
+
+/* ===============================
+   Admin Login
+================================ */
+
+app.post("/admin/login", async (req, res) => {
+
+    try {
+
+        const { username, password } = req.body;
+
+        const admin = await AdminAccount.findOne({ username, password });
+
+        if (!admin) {
+            return res.status(401).json({ message: "Invalid Username or Password" });
+        }
+
+        res.json({ message: "Admin Login Successful" });
+
+    } catch (error) {
+
+        console.log(error);
+        res.status(500).json({ message: "Server Error" });
+
     }
 
-    const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token, message: 'Login successful' });
-  } catch (err) {
-    console.error('Error during login:', err.message);
-    res.status(500).json({ message: 'Server error' });
-  }
 });
 
-// Admin Login API
-app.post('/admin/login', async (req, res) => {
-  const { username, password } = req.body;
 
-  try {
-    const admin = await AdminAccount.findOne({ username, password });
-    if (admin) {
-      res.json({ message: 'Login successful' });
-    } else {
-      res.status(401).json({ message: 'Invalid username or password' });
+/* ===============================
+   Admin Info
+================================ */
+
+app.get("/admin", async (req, res) => {
+
+    try {
+
+        const admin = await AdminAccount.findOne({});
+        res.json(admin);
+
+    } catch (error) {
+
+        res.status(500).json(error);
+
     }
-  } catch (err) {
-    console.error('Error finding admin:', err);
-    res.status(500).json({ message: 'Server error' });
-  }
+
 });
 
-// Get Admin details
-app.get('/admin', (req, res) => {
-  AdminAccount.findOne({})
-    .then((admin) => res.json(admin))
-    .catch((err) => res.status(500).json(err));
+
+app.put("/admin", async (req, res) => {
+
+    try {
+
+        const admin = await AdminAccount.findOneAndUpdate(
+            {},
+            req.body,
+            { new: true }
+        );
+
+        res.json(admin);
+
+    } catch (error) {
+
+        res.status(500).json(error);
+
+    }
+
 });
 
-// Update admin details
-app.put('/admin', (req, res) => {
-  AdminAccount.findOneAndUpdate({}, req.body, { new: true })
-    .then((admin) => res.json(admin))
-    .catch((err) => res.status(500).json(err));
+
+/* ===============================
+   Products API
+================================ */
+
+app.get("/products", async (req, res) => {
+
+    try {
+
+        const products = await ProductModel.find({});
+        res.json(products);
+
+    } catch (error) {
+
+        res.status(400).json(error);
+
+    }
+
 });
 
-// API to get a single product by ID
-app.get('/products/:id', (req, res) => {
-  ProductModel.findById(req.params.id)
-    .then((product) => {
-      if (product) {
+
+app.get("/products/:id", async (req, res) => {
+
+    try {
+
+        const product = await ProductModel.findById(req.params.id);
+
+        if (!product) {
+            return res.status(404).json({ message: "Product not found" });
+        }
+
         res.json(product);
-      } else {
-        res.status(404).json({ message: 'Product not found' });
-      }
-    })
-    .catch((err) => res.status(400).json(err));
+
+    } catch (error) {
+
+        res.status(400).json(error);
+
+    }
+
 });
 
-// API to get all products
-app.get('/products', (req, res) => {
-  ProductModel.find({})
-    .then((products) => res.json(products))
-    .catch((err) => res.status(400).json(err));
+
+app.post("/CreateProducts", async (req, res) => {
+
+    try {
+
+        const product = await ProductModel.create(req.body);
+        res.json(product);
+
+    } catch (error) {
+
+        res.status(400).json(error);
+
+    }
+
 });
 
-// API to create a new product
-app.post('/CreateProducts', (req, res) => {
-  ProductModel.create(req.body)
-    .then((product) => res.json(product))
-    .catch((err) => res.status(400).json(err));
+
+app.put("/UpdateProducts/:id", async (req, res) => {
+
+    try {
+
+        const product = await ProductModel.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        );
+
+        res.json(product);
+
+    } catch (error) {
+
+        res.status(400).json(error);
+
+    }
+
 });
 
-// API to update a product
-app.put('/UpdateProducts/:id', (req, res) => {
-  ProductModel.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    .then((product) => res.json(product))
-    .catch((err) => res.status(400).json(err));
+
+app.delete("/products/:id", async (req, res) => {
+
+    try {
+
+        await ProductModel.findByIdAndDelete(req.params.id);
+
+        res.json({ message: "Product deleted" });
+
+    } catch (error) {
+
+        res.status(400).json(error);
+
+    }
+
 });
 
-// API to delete a product
-app.delete('/products/:id', (req, res) => {
-  ProductModel.findByIdAndDelete(req.params.id)
-    .then(() => res.json({ message: 'Product deleted' }))
-    .catch((err) => res.status(400).json(err));
+
+/* ===============================
+   Orders API
+================================ */
+
+app.post("/orders", async (req, res) => {
+
+    try {
+
+        const order = await OrderModel.create(req.body);
+        res.json(order);
+
+    } catch (error) {
+
+        res.status(400).json(error);
+
+    }
+
 });
 
-// API to create a new order
-app.post('/orders', (req, res) => {
-  OrderModel.create(req.body)
-    .then((order) => res.json(order))
-    .catch((err) => res.status(400).json(err));
+
+app.get("/orders", async (req, res) => {
+
+    try {
+
+        const orders = await OrderModel.find({});
+        res.json(orders);
+
+    } catch (error) {
+
+        res.status(400).json(error);
+
+    }
+
 });
 
-// API to get all orders
-app.get('/orders', (req, res) => {
-  OrderModel.find({})
-    .then((orders) => res.json(orders))
-    .catch((err) => res.status(400).json(err));
-});
 
-const PORT = process.env.PORT || 3002;
+/* ===============================
+   Server
+================================ */
+
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+
+    console.log(`🚀 Server running on port ${PORT}`);
+
 });
